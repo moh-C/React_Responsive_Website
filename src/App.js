@@ -1,20 +1,21 @@
-import React from "react";
+import React, { Component } from "react";
+import Navbar from "./Components/Navbar";
+import Users from "./Components/Users";
 import "./App.css";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-library.add(fab, faUser);
+library.add(fab);
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Yo</h1>
-      <FontAwesomeIcon icon={["fab", "github"]} />
-    </div>
-  );
+export class App extends Component {
+  render() {
+    return (
+      <React.Fragment>
+        <Navbar title="Github Finder" icon="github" />
+        <Users />
+      </React.Fragment>
+    );
+  }
 }
 
 export default App;
