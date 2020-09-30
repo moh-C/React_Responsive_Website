@@ -23,9 +23,7 @@ let UserItem = ({ user: { html_url, avatar_url, login } }) => {
 };
 
 UserItem.defaultProps = {
-  html_url: PropTypes.string.isRequired,
-  avatar_url: PropTypes.string.isRequired,
-  login: PropTypes.string.isRequired,
+  users: PropTypes.object.isRequired,
 };
 
 export default UserItem;
