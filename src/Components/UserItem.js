@@ -13,7 +13,12 @@ let UserItem = ({ user: { html_url, avatar_url, login } }) => {
         />
         <h3>{login}</h3>
         <div>
-          <a href={html_url} className="btn btn-dark btn-sm my-1">
+          <a
+            href={html_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-dark btn-sm my-1"
+          >
             More...
           </a>
         </div>
