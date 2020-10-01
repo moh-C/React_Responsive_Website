@@ -1,19 +1,23 @@
 import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import axios from "axios";
+
 import Navbar from "./Components/Navbar";
 import Users from "./Components/Users";
+import User from "./Components/User";
 import Search from "./Components/Search";
 import Alert from "./Components/Alert";
 import "./App.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
-import axios from "axios";
+import About from "./Components/Pages/About";
 
 library.add(fab);
 
 export class App extends Component {
   state = {
     users: [],
+    user: {},
     loading: false,
     alert: null,
   };
@@ -32,10 +36,19 @@ export class App extends Component {
     this.setState({ loading: false, users: res });
   };
 
+  getUser = async (text) => {
+    this.setState({ loading: true });
+    let url = `http://api.github.com/users/${text}?
+        client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&
+        client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`;
+    const res = (await axios.get(url)).data;
+    this.setState({ loading: false, user: res });
+  };
+
   setAlert = (msg, type) => this.setState({ alert: { msg, type } });
 
   render() {
-    const { loading, users, alert } = this.state;
+    const { loading, users, alert, user } = this.state;
     return (
       <Router>
         <Fragment>
@@ -56,6 +69,14 @@ export class App extends Component {
                     />
                     <Users loading={loading} users={users} />
                   </Fragment>
+                )}
+              />
+              <Route exact path="/about" component={About} />
+              <Route
+                exact
+                path="/user/:login"
+                render={(props) => (
+                  <User {...props} getUser={this.getUser} user={user} />
                 )}
               />
             </Switch>
