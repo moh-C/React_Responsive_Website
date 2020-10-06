@@ -74,9 +74,14 @@ export class App extends Component {
               <Route exact path="/about" component={About} />
               <Route
                 exact
-                path="/user/:login"
+                path="/users/:login"
                 render={(props) => (
-                  <User {...props} getUser={this.getUser} user={user} />
+                  <User
+                    {...props}
+                    getUser={this.getUser}
+                    user={user}
+                    loading={loading}
+                  />
                 )}
               />
             </Switch>
