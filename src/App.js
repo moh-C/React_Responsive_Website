@@ -17,6 +17,7 @@ library.add(fab);
 export class App extends Component {
   state = {
     users: [],
+    repos: [],
     user: {},
     loading: false,
     alert: null,
@@ -45,10 +46,19 @@ export class App extends Component {
     this.setState({ loading: false, user: res });
   };
 
+  getUserRepos = async (user) => {
+    this.setState({ loading: true });
+    let url = `http://api.github.com/users/${user}/repos?sort=created:asc&
+        client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&
+        client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`;
+    const res = (await axios.get(url)).data;
+    this.setState({ loading: false, repos: res });
+  };
+
   setAlert = (msg, type) => this.setState({ alert: { msg, type } });
 
   render() {
-    const { loading, users, alert, user } = this.state;
+    const { loading, users, alert, user, repos } = this.state;
     return (
       <Router>
         <Fragment>
@@ -79,6 +89,8 @@ export class App extends Component {
                   <User
                     {...props}
                     getUser={this.getUser}
+                    getUserRepos={this.getUserRepos}
+                    repos={repos}
                     user={user}
                     loading={loading}
                   />

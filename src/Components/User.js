@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import Repos from "./Repos/Repos";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
@@ -16,6 +17,7 @@ export default class User extends Component {
   );
   componentDidMount() {
     this.props.getUser(this.props.match.params.login);
+    this.props.getUserRepos(this.props.match.params.login);
   }
   render() {
     const {
@@ -97,6 +99,7 @@ export default class User extends Component {
           <div className="badge badge-light">Public Gists: {public_gists}</div>
           <div className="badge badge-dark">Repositories: {public_repos}</div>
         </div>
+        <Repos repos={this.props.repos} />
       </Fragment>
     );
   }
