@@ -8,8 +8,6 @@ import {
   CLEAR_USERS,
   GET_REPOS,
   SET_LOADING,
-  SET_ALERT,
-  REMOVE_ALERT,
 } from "../types";
 
 const GithubState = (props) => {
@@ -17,7 +15,6 @@ const GithubState = (props) => {
     user: {},
     users: [],
     repos: [],
-    alert: null,
     loading: false,
   };
   const [state, dispatch] = useReducer(GithubReducer, initialState);
@@ -64,13 +61,6 @@ const GithubState = (props) => {
   // Set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
 
-  // Set Alert
-  const showAlert = (msg, type) =>
-    dispatch({ type: SET_ALERT, payload: { msg, type } });
-
-  // Hide Alert
-  const hideAlert = () => dispatch({ type: REMOVE_ALERT });
-
   // Return
   return (
     <GithubContext.Provider
@@ -84,8 +74,6 @@ const GithubState = (props) => {
         clearUsers,
         getUser,
         getUserRepos,
-        showAlert,
-        hideAlert,
       }}
     >
       {props.children}
