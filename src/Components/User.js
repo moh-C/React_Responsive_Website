@@ -8,11 +8,11 @@ import Spinner from "./Spinner";
 import { hireableIcon, notHireable, userIcon } from "./Icons/Icon";
 
 const User = ({ match }) => {
-  const githubContext = useContext(GithubContext);
+  const { user, loading, getUser, getUserRepos } = useContext(GithubContext);
 
   useEffect(() => {
-    githubContext.getUser(match.params.login);
-    githubContext.getUserRepos(match.params.login);
+    getUser(match.params.login);
+    getUserRepos(match.params.login);
     // eslint-disable-next-line
   }, []);
 
@@ -29,9 +29,9 @@ const User = ({ match }) => {
     following,
     public_repos,
     public_gists,
-  } = githubContext.user;
+  } = user;
 
-  if (githubContext.loading) {
+  if (loading) {
     return <Spinner />;
   }
 

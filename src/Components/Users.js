@@ -4,14 +4,14 @@ import Spinner from "./Spinner";
 import GithubContext from "../Context/Github/githubContext";
 
 const Users = () => {
-  const githubContext = useContext(GithubContext);
+  const { users, loading } = useContext(GithubContext);
 
-  if (githubContext.loading) {
+  if (loading) {
     return <Spinner />;
   }
   return (
     <div className="singleUser">
-      {githubContext.users.map((user) => (
+      {users.map((user) => (
         <UserItem user={user} key={user.id}></UserItem>
       ))}
     </div>

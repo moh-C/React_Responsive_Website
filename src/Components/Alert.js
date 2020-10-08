@@ -5,12 +5,12 @@ import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import GithubContext from "../Context/Github/githubContext";
 
 const Alert = () => {
-  const githubContext = useContext(GithubContext);
+  const { alert } = useContext(GithubContext);
   return (
-    githubContext.alert !== null &&
-    githubContext.alert.msg !== null && (
-      <div className={`alert alert-${githubContext.alert.type}`}>
-        <FontAwesomeIcon icon={faInfoCircle} /> {githubContext.alert.msg}
+    alert !== null &&
+    alert.msg !== null && (
+      <div className={`alert alert-${alert.type}`}>
+        <FontAwesomeIcon icon={faInfoCircle} /> {alert.msg}
       </div>
     )
   );

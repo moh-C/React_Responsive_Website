@@ -3,12 +3,12 @@ import GithubContext from "../../Context/Github/githubContext";
 import RepoItem from "./RepoItem";
 
 const Repos = () => {
-  const githubContext = useContext(GithubContext);
+  const { repos } = useContext(GithubContext);
   let i = 0;
   return (
     <Fragment>
       <div className="card">
-        {githubContext.repos.map((element) => (
+        {repos.map((element) => (
           <RepoItem repo={element} key={i++} />
         ))}
       </div>
