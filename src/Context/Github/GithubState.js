@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import GithubContext from "./githubContext";
 import GithubReducer from "./GithubReducer";
-import Axios from "axios";
+import axios from "axios";
 import {
   SEARCH_USERS,
   GET_USERS,
@@ -23,19 +23,55 @@ const GithubState = (props) => {
   const [state, dispatch] = useReducer(GithubReducer, initialState);
 
   // Search Users
+  const searchUsers = async (text) => {
+    setLoading();
+    let url = `http://api.github.com/search/users?q=${text}&
+        client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&
+        client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`;
+    const res = (await axios.get(url)).data.items;
 
-  // Get Users
+    dispatch({ type: SEARCH_USERS, payload: res });
+  };
+
+  // Get User
+  const getUser = async (text) => {
+    setLoading();
+    let url = `http://api.github.com/users/${text}?
+        client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&
+        client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`;
+    const res = (await axios.get(url)).data;
+    dispatch({ type: GET_USERS, payload: res });
+  };
 
   // Clear Users
+  const clearUsers = () => {
+    dispatch({ type: CLEAR_USERS });
+  };
 
   // Get Repos
+  const getUserRepos = async (user) => {
+    setLoading();
+    let url = `http://api.github.com/users/${user}/repos?sort=created:asc&
+        client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&
+        client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`;
+    const res = (await axios.get(url)).data;
+    dispatch({
+      type: GET_REPOS,
+      payload: res,
+    });
+  };
 
   // Set Loading
+  const setLoading = () => dispatch({ type: SET_LOADING });
 
   // Set Alert
+  const showAlert = (msg, type) =>
+    dispatch({ type: SET_ALERT, payload: { msg, type } });
 
-  // Remove Alert
+  // Hide Alert
+  const hideAlert = () => dispatch({ type: REMOVE_ALERT });
 
+  // Return
   return (
     <GithubContext.Provider
       value={{
@@ -44,6 +80,12 @@ const GithubState = (props) => {
         repos: state.repos,
         alert: state.alert,
         loading: state.loading,
+        searchUsers,
+        clearUsers,
+        getUser,
+        getUserRepos,
+        showAlert,
+        hideAlert,
       }}
     >
       {props.children}

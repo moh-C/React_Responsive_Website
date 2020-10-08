@@ -1,21 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import PropTypes from "prop-types";
 
-const Alert = ({ alert }) => {
+import GithubContext from "../Context/Github/githubContext";
+
+const Alert = () => {
+  const githubContext = useContext(GithubContext);
   return (
-    alert !== null &&
-    alert.msg !== null && (
-      <div className={`alert alert-${alert.type}`}>
-        <FontAwesomeIcon icon={faInfoCircle} /> {alert.msg}
+    githubContext.alert !== null &&
+    githubContext.alert.msg !== null && (
+      <div className={`alert alert-${githubContext.alert.type}`}>
+        <FontAwesomeIcon icon={faInfoCircle} /> {githubContext.alert.msg}
       </div>
     )
   );
-};
-
-Alert.prototype = {
-  alert: PropTypes.object.isRequired,
 };
 
 export default Alert;

@@ -418,3 +418,9 @@ table th {
   grid-template-columns: 4fr 1fr;
   /* min-height: 100px; */
 }
+
+.singleUser {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 1rem;
+}

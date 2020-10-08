@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect, Fragment, useContext } from "react";
 import Repos from "./Repos/Repos";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Spinner from "./Spinner";
 import { Link } from "react-router-dom";
+import GithubContext from "../Context/Github/githubContext";
 
 let hireableIcon = (
     <FontAwesomeIcon icon={faCheckCircle} className="text-success" />
@@ -16,10 +17,12 @@ let hireableIcon = (
     <FontAwesomeIcon icon={faTimesCircle} style={{ color: "red" }} />
   );
 
-const User = ({ user, loading, getUser, getUserRepos, repos, match }) => {
+const User = ({ match }) => {
+  const githubContext = useContext(GithubContext);
+
   useEffect(() => {
-    getUser(match.params.login);
-    getUserRepos(match.params.login);
+    githubContext.getUser(match.params.login);
+    githubContext.getUserRepos(match.params.login);
     // eslint-disable-next-line
   }, []);
 
@@ -36,11 +39,11 @@ const User = ({ user, loading, getUser, getUserRepos, repos, match }) => {
     following,
     public_repos,
     public_gists,
-  } = user;
+  } = githubContext.user;
 
   const userIcon = <FontAwesomeIcon icon={faUser} />;
 
-  if (loading) {
+  if (githubContext.loading) {
     return <Spinner />;
   }
 
@@ -104,7 +107,7 @@ const User = ({ user, loading, getUser, getUserRepos, repos, match }) => {
         <div className="badge badge-light">Public Gists: {public_gists}</div>
         <div className="badge badge-dark">Repositories: {public_repos}</div>
       </div>
-      <Repos repos={repos} />
+      <Repos repos={githubContext.repos} />
     </Fragment>
   );
 };
