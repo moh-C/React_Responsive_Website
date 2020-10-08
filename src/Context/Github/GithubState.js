@@ -10,6 +10,17 @@ import {
   SET_LOADING,
 } from "../types";
 
+let githubClientID;
+let githubClientSecret;
+
+if (process.env.NODE_ENV !== "production") {
+  githubClientID = process.env.REACT_APP_GITHUB_CLIENT_ID;
+  githubClientSecret = process.env.REACT_APP_GITHUB_CLIENT_SECRET;
+} else {
+  githubClientID = process.env.GITHUB_CLIENT_ID;
+  githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
+}
+
 const GithubState = (props) => {
   const initialState = {
     user: {},
@@ -22,9 +33,7 @@ const GithubState = (props) => {
   // Search Users
   const searchUsers = async (text) => {
     setLoading();
-    let url = `http://api.github.com/search/users?q=${text}&
-        client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&
-        client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`;
+    let url = `https://api.github.com/search/users?q=${text}&client_id=${githubClientID}&client_secret=${githubClientSecret}`;
     const res = (await axios.get(url)).data.items;
 
     dispatch({ type: SEARCH_USERS, payload: res });
@@ -33,9 +42,7 @@ const GithubState = (props) => {
   // Get User
   const getUser = async (text) => {
     setLoading();
-    let url = `http://api.github.com/users/${text}?
-        client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&
-        client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`;
+    let url = `https://api.github.com/users/${text}?client_id=${githubClientID}&client_secret=${githubClientSecret}`;
     const res = (await axios.get(url)).data;
     dispatch({ type: GET_USERS, payload: res });
   };
@@ -48,9 +55,7 @@ const GithubState = (props) => {
   // Get Repos
   const getUserRepos = async (user) => {
     setLoading();
-    let url = `http://api.github.com/users/${user}/repos?sort=created:asc&
-        client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&
-        client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`;
+    let url = `https://api.github.com/users/${user}/repos?sort=created:asc&client_id=${githubClientID}&client_secret=${githubClientSecret}`;
     const res = (await axios.get(url)).data;
     dispatch({
       type: GET_REPOS,
