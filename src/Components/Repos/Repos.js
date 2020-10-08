@@ -1,12 +1,14 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
+import GithubContext from "../../Context/Github/githubContext";
 import RepoItem from "./RepoItem";
 
-const Repos = ({ repos }) => {
+const Repos = () => {
+  const githubContext = useContext(GithubContext);
   let i = 0;
   return (
     <Fragment>
       <div className="card">
-        {repos.map((element) => (
+        {githubContext.repos.map((element) => (
           <RepoItem repo={element} key={i++} />
         ))}
       </div>

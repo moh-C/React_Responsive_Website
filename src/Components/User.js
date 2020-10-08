@@ -1,21 +1,11 @@
 import React, { useEffect, Fragment, useContext } from "react";
-import Repos from "./Repos/Repos";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheckCircle,
-  faTimesCircle,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
-import Spinner from "./Spinner";
 import { Link } from "react-router-dom";
 import GithubContext from "../Context/Github/githubContext";
 
-let hireableIcon = (
-    <FontAwesomeIcon icon={faCheckCircle} className="text-success" />
-  ),
-  notHireable = (
-    <FontAwesomeIcon icon={faTimesCircle} style={{ color: "red" }} />
-  );
+import Repos from "./Repos/Repos";
+import Spinner from "./Spinner";
+
+import { hireableIcon, notHireable, userIcon } from "./Icons/Icon";
 
 const User = ({ match }) => {
   const githubContext = useContext(GithubContext);
@@ -40,8 +30,6 @@ const User = ({ match }) => {
     public_repos,
     public_gists,
   } = githubContext.user;
-
-  const userIcon = <FontAwesomeIcon icon={faUser} />;
 
   if (githubContext.loading) {
     return <Spinner />;
@@ -107,7 +95,7 @@ const User = ({ match }) => {
         <div className="badge badge-light">Public Gists: {public_gists}</div>
         <div className="badge badge-dark">Repositories: {public_repos}</div>
       </div>
-      <Repos repos={githubContext.repos} />
+      <Repos />
     </Fragment>
   );
 };
