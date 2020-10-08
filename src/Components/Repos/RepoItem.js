@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-let RepoItem = ({ repo }) => {
+const RepoItem = ({ repo }) => {
   return (
     <div className="repoItem card text-center">
       <a href={repo.html_url} target="_blank" rel="noopener noreferrer">

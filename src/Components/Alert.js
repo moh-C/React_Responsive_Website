@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
 
 const Alert = ({ alert }) => {
   return (
@@ -11,6 +12,10 @@ const Alert = ({ alert }) => {
       </div>
     )
   );
+};
+
+Alert.prototype = {
+  alert: PropTypes.object.isRequired,
 };
 
 export default Alert;

@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import RepoItem from "./RepoItem";
 
-let Repos = ({ repos }) => {
+const Repos = ({ repos }) => {
   return (
     <Fragment>
       <div className="card">

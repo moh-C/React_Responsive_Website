@@ -1,6 +1,6 @@
 import React from "react";
 
-function About() {
+const About = () => {
   return (
     <div>
       <h1>About page</h1>
@@ -8,6 +8,6 @@ function About() {
       <p>Version 1.0.0</p>
     </div>
   );
-}
+};
 
 export default About;
